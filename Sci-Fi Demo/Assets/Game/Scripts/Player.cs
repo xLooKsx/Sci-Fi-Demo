@@ -9,16 +9,55 @@ public class Player : MonoBehaviour
     private CharacterController _characterController;
     private float _speed = 3.5f;
     private float _gravity = 9.81f;
+
+    [SerializeField]
+    public Gun gun;
     // Start is called before the first frame update
     void Start()
     {
+        configMouse();
         _characterController = GetComponent<CharacterController>();
+    }
+
+    private static void configMouse()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        exitGame();
         movement();
+        detectShootButton();
+    }
+
+    private void detectShootButton()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Ray rayOrigin = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hitInfo;
+            if (Physics.Raycast(rayOrigin, out hitInfo))
+            {
+                Debug.Log("I Hit something: " + hitInfo.transform.name);
+                gun.weaponFire(hitInfo);
+            }
+        }
+        if (!Input.GetMouseButton(0))
+        {
+            gun.stopWeaponFire();
+        }
+    }
+
+    private void exitGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }        
     }
 
     private void movement()
