@@ -77,4 +77,10 @@ public class Player : MonoBehaviour
     {
         return transform.TransformDirection(speedMovement);
     }
+
+    public void tradeWeaponByCoin()
+    {
+        gun.gameObject.SetActive(true);
+        hasACoin = false;
+    }
 }
