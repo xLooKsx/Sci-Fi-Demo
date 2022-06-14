@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private float _speed = 3.5f;
     private float _gravity = 9.81f;
 
+    public bool hasACoin = false;
+
     [SerializeField]
     public Gun gun;
     // Start is called before the first frame update
