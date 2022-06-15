@@ -43,8 +43,13 @@ public class Player : MonoBehaviour
             RaycastHit hitInfo;
             if (Physics.Raycast(rayOrigin, out hitInfo))
             {
-                Debug.Log("I Hit something: " + hitInfo.transform.name);
                 gun.weaponFire(hitInfo);
+
+                WoodenCrate woodenCrate = hitInfo.transform.gameObject.GetComponent<WoodenCrate>();
+                if (woodenCrate != null)
+                {
+                    woodenCrate.replaceBrokenCrate();
+                }
             }
         }
         if (!Input.GetMouseButton(0))
